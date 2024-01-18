@@ -1,6 +1,6 @@
 {
   "name": "@seneca/sqs-transport",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "dist/SqsTransport.js",
   "type": "commonjs",
   "types": "dist/SqsTransport.d.ts",

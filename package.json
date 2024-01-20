@@ -1,6 +1,6 @@
 {
   "name": "@seneca/sqs-transport",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "main": "dist/SqsTransport.js",
   "type": "commonjs",
   "types": "dist/SqsTransport.d.ts",
@@ -41,7 +41,7 @@
     "node": ">=14"
   },
   "devDependencies": {
-    "@aws-sdk/client-sqs": "^3.490.0",
+    "@aws-sdk/client-sqs": "^3.496.0",
     "@seneca/doc": "^6.0.0",
     "@seneca/maintain": "^0.1.0",
     "@types/async": "^3.2.24",

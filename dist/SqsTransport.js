@@ -6,6 +6,8 @@ const client_sqs_1 = require("@aws-sdk/client-sqs");
 const defaults = {
     debug: false,
     log: [],
+    prefix: '',
+    suffix: '',
 };
 function SqsTransport(options) {
     const seneca = this;
@@ -24,16 +26,16 @@ function SqsTransport(options) {
             .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
             handler: {
                 name: 'sqs',
-                match: (event) => {
-                    var _a;
+                match: (trigger) => {
                     // TODO: also match on pin?
-                    let matched = 'aws:sqs' === (event.Records && ((_a = event.Records[0]) === null || _a === void 0 ? void 0 : _a.eventSource));
-                    console.log('SQS MATCHED', matched, event);
+                    let matched = 'aws:sqs' === trigger.record.eventSource;
+                    console.log('SQS MATCHED', matched, trigger);
                     return matched;
                 },
-                process: async function (event, context) {
-                    let body = JSON.parse(event.Records[0].body);
-                    return gateway(body, { event, context });
+                process: async function (trigger) {
+                    const { record } = trigger;
+                    let body = JSON.parse(record.body);
+                    return gateway(body, trigger);
                 }
             }
         });
@@ -43,7 +45,12 @@ function SqsTransport(options) {
         var _a;
         const seneca = this.root.delegate();
         const pg = seneca.util.pincanon(config.pin || config.pins);
-        const queueName = pg.replace(/:/g, '_').replace(/;/g, '__').replace(/[^a-zA-Z0-9_]/g, '-');
+        const queueName = options.prefix +
+            pg
+                .replace(/:/g, '_')
+                .replace(/;/g, '__')
+                .replace(/[^a-zA-Z0-9_]/g, '-') +
+            options.suffix;
         const queUrl = (_a = queueUrlMap[queueName]) !== null && _a !== void 0 ? _a : (queueUrlMap[queueName] = await getQueueUrl(queueName));
         async function send_msg(msg, reply, meta) {
             const msgstr = JSON.stringify(tu.externalize_msg(seneca, msg, meta));

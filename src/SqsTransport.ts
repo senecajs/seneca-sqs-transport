@@ -11,6 +11,8 @@ import {
 type Options = {
   debug: boolean
   log: any[]
+  prefix: string
+  suffix: string
 }
 
 export type SqsTransportOptions = Partial<Options>
@@ -19,6 +21,8 @@ export type SqsTransportOptions = Partial<Options>
 const defaults: Options = {
   debug: false,
   log: [],
+  prefix: '',
+  suffix: '',
 }
 
 
@@ -48,15 +52,16 @@ function SqsTransport(this: any, options: Options) {
       .act('sys:gateway,kind:lambda,add:hook,hook:handler', {
         handler: {
           name: 'sqs',
-          match: (event: any) => {
+          match: (trigger: { record: any }) => {
             // TODO: also match on pin?
-            let matched = 'aws:sqs' === (event.Records && event.Records[0]?.eventSource)
-            console.log('SQS MATCHED', matched, event)
+            let matched = 'aws:sqs' === trigger.record.eventSource
+            console.log('SQS MATCHED', matched, trigger)
             return matched
           },
-          process: async function(this: typeof seneca, event: any, context: any) {
-            let body = JSON.parse(event.Records[0].body)
-            return gateway(body, { event, context })
+          process: async function(this: typeof seneca, trigger: { record: any, event: any }) {
+            const { record } = trigger
+            let body = JSON.parse(record.body)
+            return gateway(body, trigger)
           }
         }
       })
@@ -69,7 +74,13 @@ function SqsTransport(this: any, options: Options) {
     const seneca = this.root.delegate()
 
     const pg = seneca.util.pincanon(config.pin || config.pins)
-    const queueName = pg.replace(/:/g, '_').replace(/;/g, '__').replace(/[^a-zA-Z0-9_]/g, '-')
+    const queueName =
+      options.prefix +
+      pg
+        .replace(/:/g, '_')
+        .replace(/;/g, '__')
+        .replace(/[^a-zA-Z0-9_]/g, '-') +
+      options.suffix
     const queUrl = queueUrlMap[queueName] ??= await getQueueUrl(queueName)
 
 

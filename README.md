@@ -37,6 +37,8 @@ TODO
 
 * `debug` : boolean
 * `log` : array
+* `prefix` : string
+* `suffix` : string
 * `init$` : boolean
 
 

@@ -61,7 +61,7 @@ function SqsTransport(this: any, options: Options) {
           process: async function(this: typeof seneca, trigger: { record: any, event: any }) {
             const { record } = trigger
             let body = JSON.parse(record.body)
-            return gateway(body, trigger)
+            return gateway(body, { ...trigger, gateway$: { local: true } })
           }
         }
       })

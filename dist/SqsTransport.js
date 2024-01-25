@@ -35,7 +35,7 @@ function SqsTransport(options) {
                 process: async function (trigger) {
                     const { record } = trigger;
                     let body = JSON.parse(record.body);
-                    return gateway(body, trigger);
+                    return gateway(body, { ...trigger, gateway$: { local: true } });
                 }
             }
         });

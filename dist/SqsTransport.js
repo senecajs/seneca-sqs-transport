@@ -27,9 +27,10 @@ function SqsTransport(options) {
             handler: {
                 name: 'sqs',
                 match: (trigger) => {
+                    var _a, _b;
                     // TODO: also match on pin?
                     let matched = 'aws:sqs' === trigger.record.eventSource;
-                    console.log('SQS MATCHED', matched, trigger);
+                    console.log('SQS MATCHED', matched, (_a = trigger.record) === null || _a === void 0 ? void 0 : _a.messageId, (((_b = trigger.record) === null || _b === void 0 ? void 0 : _b.body) || '').substring(0, 111));
                     return matched;
                 },
                 process: async function (trigger) {

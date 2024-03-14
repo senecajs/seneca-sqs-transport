@@ -55,7 +55,9 @@ function SqsTransport(this: any, options: Options) {
           match: (trigger: { record: any }) => {
             // TODO: also match on pin?
             let matched = 'aws:sqs' === trigger.record.eventSource
-            console.log('SQS MATCHED', matched, trigger)
+            console.log('SQS MATCHED', matched,
+              trigger.record?.messageId,
+              (trigger.record?.body || '').substring(0, 111))
             return matched
           },
           process: async function(this: typeof seneca, trigger: { record: any, event: any }) {

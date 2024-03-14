@@ -49,8 +49,8 @@ TODO
 
 ## Action Patterns
 
-* ["role":"transport","hook":"client","type":"sqs"](#-roletransporthookclienttypesqs-)
-* ["role":"transport","hook":"listen","type":"sqs"](#-roletransporthooklistentypesqs-)
+* [role:transport,hook:client,type:sqs](#-roletransporthookclienttypesqs-)
+* [role:transport,hook:listen,type:sqs](#-roletransporthooklistentypesqs-)
 
 
 <!--END:action-list-->
@@ -60,14 +60,14 @@ TODO
 
 ## Action Descriptions
 
-### &laquo; `"role":"transport","hook":"client","type":"sqs"` &raquo;
+### &laquo; `role:transport,hook:client,type:sqs` &raquo;
 
 No description provided.
 
 
 
 ----------
-### &laquo; `"role":"transport","hook":"listen","type":"sqs"` &raquo;
+### &laquo; `role:transport,hook:listen,type:sqs` &raquo;
 
 No description provided.
 

@@ -1,6 +1,6 @@
 # Changes
 
-## 0.6.1
+## 0.7.0
 
 * Seneca 4 prerelease support: tests run on `seneca@4.0.0-rc5` and the
   4.0.0 build; `seneca`, `seneca-promisify`, `seneca-entity`,

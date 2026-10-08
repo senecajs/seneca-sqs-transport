@@ -28,6 +28,8 @@ npm install @seneca/sqs-transport @aws-sdk/client-sqs \
 ## Quick Example
 
 ```js
+const Seneca = require('seneca')
+
 const seneca = Seneca({ legacy: false })
   .use('promisify')
   .use('gateway')

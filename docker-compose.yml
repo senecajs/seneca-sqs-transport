@@ -1,0 +1,13 @@
+name: seneca-sqs-transport
+
+services:
+  elasticmq:
+    image: softwaremill/elasticmq-native:1.7.1
+    container_name: seneca-sqs-transport-elasticmq
+    ports:
+      - '19324:9324'
+    healthcheck:
+      test: ['CMD-SHELL', 'wget -q -O /dev/null "http://127.0.0.1:9324/?Action=ListQueues" || exit 1']
+      interval: 5s
+      timeout: 5s
+      retries: 20

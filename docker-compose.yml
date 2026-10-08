@@ -4,6 +4,8 @@ services:
   elasticmq:
     image: softwaremill/elasticmq-native:1.7.1
     container_name: seneca-sqs-transport-elasticmq
+    volumes:
+      - ./test/elasticmq/elasticmq.conf:/opt/elasticmq.conf:ro
     ports:
       - '19324:9324'
     healthcheck:

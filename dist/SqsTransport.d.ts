@@ -1,3 +1,4 @@
+import type Seneca from 'seneca';
 type Options = {
     debug: boolean;
     log: any[];
@@ -5,7 +6,7 @@ type Options = {
     suffix: string;
 };
 export type SqsTransportOptions = Partial<Options>;
-declare function SqsTransport(this: any, options: Options): {
+declare function SqsTransport(this: Seneca.Instance, options: Options): {
     exports: {};
 };
 export default SqsTransport;

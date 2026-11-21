@@ -27,9 +27,6 @@ async function run() {
 
   const seneca = Seneca({ legacy: false })
     .quiet()
-    .use('promisify')
-    .use('gateway')
-    .use('gateway-lambda')
     .use(SqsTransport, { prefix: 'demo-' })
     .client({ type: 'sqs', pin: 'color:red' })
 

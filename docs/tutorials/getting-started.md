@@ -7,11 +7,12 @@ is needed.
 ## 1. Install
 
 ```sh
-npm install seneca@^4.0.0-rc5 seneca-promisify @seneca/gateway \
-  @seneca/gateway-lambda @seneca/sqs-transport @aws-sdk/client-sqs
+npm install seneca@^4 @seneca/sqs-transport @aws-sdk/client-sqs
 ```
 
-The plugin works with Seneca 3 and with the Seneca 4 prerelease.
+The plugin needs Seneca 4 and Node.js 24 or later. `@aws-sdk/client-sqs`
+is a dependency of the plugin; the program below also uses it directly to
+create the queue.
 
 ## 2. Start ElasticMQ
 
@@ -54,9 +55,6 @@ async function run() {
 
   const seneca = Seneca({ legacy: false })
     .quiet()
-    .use('promisify')
-    .use('gateway')
-    .use('gateway-lambda')
     .use(SqsTransport, { prefix: 'demo-' })
     .client({ type: 'sqs', pin: 'color:red' })
 

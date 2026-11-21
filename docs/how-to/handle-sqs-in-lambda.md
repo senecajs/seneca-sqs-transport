@@ -3,17 +3,16 @@
 Goal: run Seneca actions for messages that SQS delivers to a Lambda
 function.
 
-1. Load `seneca-promisify`, `@seneca/gateway` and `@seneca/gateway-lambda`
-   before this plugin. The plugin reads the `gateway/handler` export when
+1. Install `@seneca/gateway` and `@seneca/gateway-lambda` (2.x), and load
+   them before this plugin. The plugin reads the `gateway/handler` export when
    it starts.
 2. Add your actions and call `listen({ type: 'sqs', pin: ... })`.
 3. Export the `gateway-lambda/handler` function as the Lambda handler.
 
 ```js
 const seneca = Seneca({ legacy: false })
-  .use('promisify')
-  .use('gateway')
-  .use('gateway-lambda')
+  .use('@seneca/gateway')
+  .use('@seneca/gateway-lambda')
   .use('@seneca/sqs-transport')
   .message('color:red', async function (msg) {
     return { hex: '#ff0000', shade: msg.shade }

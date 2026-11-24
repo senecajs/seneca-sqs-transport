@@ -43,8 +43,9 @@ Called by `seneca.listen({ type: 'sqs' })`.
 * For a matched record, `body` is parsed as JSON and passed to the
   `gateway/handler` export with `gateway$: { local: true }`. The result
   is the gateway result, for example `{ error: false, out: {...} }`.
-* Requires `@seneca/gateway` and `@seneca/gateway-lambda` (loaded before
-  this plugin).
+* Requires `@seneca/gateway` and `@seneca/gateway-lambda` 2.x (loaded
+  before this plugin). They are optional peer dependencies, so install
+  them yourself.
 
 ## Exports and errors
 

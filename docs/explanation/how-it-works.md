@@ -22,14 +22,19 @@ handles `meta$` and decides which fields are safe. The lambda gateway
 knows the Lambda event format. Reusing them keeps this plugin small: it
 only adds the SQS specific matching and the queue naming.
 
-## Seneca 3 and Seneca 4
+## Seneca 4
 
-The plugin uses only APIs that both versions keep: `seneca.add`,
-`seneca.export`, `delegate`, `util.pincanon` and the `transport/utils`
-export. Seneca 4 has no network transports in core, but the
-`role:transport,hook:*` hook mechanism used by `client` and `listen` is
-still there, so this plugin works without `seneca-transport`. The tests
-run on Seneca 4.0.0-rc5 and the 4.0.0 build.
+Version 0.7 runs on Seneca 4 only; Seneca 3 users stay on 0.6. The plugin
+uses `seneca.add`, `seneca.export`, `delegate`, `util.pincanon` and the
+`externalize_msg` helper of the `transport/utils` export. Seneca 4 has no
+network transports in core, but the `role:transport,hook:*` hook mechanism
+used by `client` and `listen` is still there, so this plugin works without
+`@seneca/transport`. `@seneca/transport` 9 keeps `externalize_msg` when it
+replaces the `transport/utils` export. `seneca-transport` 8 does not, so
+the plugin stops at load with an error if it is loaded first.
+
+The gateway plugins are optional peer dependencies: only the listen side
+needs them.
 
 ## Limits
 

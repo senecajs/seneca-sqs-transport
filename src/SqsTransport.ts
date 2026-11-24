@@ -6,6 +6,7 @@ import {
   SendMessageCommand,
   GetQueueUrlCommand,
 } from "@aws-sdk/client-sqs"
+import type Seneca from 'seneca'
 
 
 type Options = {
@@ -26,7 +27,7 @@ const defaults: Options = {
 }
 
 
-function SqsTransport(this: any, options: Options) {
+function SqsTransport(this: Seneca.Instance, options: Options) {
   const seneca: any = this
 
   const tag = seneca.plugin.tag
@@ -36,7 +37,16 @@ function SqsTransport(this: any, options: Options) {
   const queueUrlMap: any = {}
   const log = options.debug && (options.log || [])
 
+  // Seneca 4 core provides externalize_msg; @seneca/transport 9 keeps it
+  // when it replaces the export. seneca-transport 8 and older do not.
   const tu = seneca.export('transport/utils')
+  if (null == tu || 'function' !== typeof tu.externalize_msg) {
+    throw new Error(
+      'sqs-transport: the transport/utils export has no externalize_msg; ' +
+      'use Seneca 4, and @seneca/transport 9 or later instead of ' +
+      'seneca-transport'
+    )
+  }
 
   const client = new SQSClient()
 

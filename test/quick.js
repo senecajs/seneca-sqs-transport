@@ -8,9 +8,8 @@ async function run() {
   
   const seneca = await Seneca({legacy:false,timeout:1111})
         .test('print')
-        .use('promisify')
-        .use('gateway')
-        .use('gateway-lambda')
+        .use('@seneca/gateway')
+        .use('@seneca/gateway-lambda')
         .use('..', {debug:true,log})
 
         .message('a:1', async function(msg) {

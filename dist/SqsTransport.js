@@ -16,7 +16,14 @@ function SqsTransport(options) {
     const gateway = seneca.export('gateway' + gtag + '/handler');
     const queueUrlMap = {};
     const log = options.debug && (options.log || []);
+    // Seneca 4 core provides externalize_msg; @seneca/transport 9 keeps it
+    // when it replaces the export. seneca-transport 8 and older do not.
     const tu = seneca.export('transport/utils');
+    if (null == tu || 'function' !== typeof tu.externalize_msg) {
+        throw new Error('sqs-transport: the transport/utils export has no externalize_msg; ' +
+            'use Seneca 4, and @seneca/transport 9 or later instead of ' +
+            'seneca-transport');
+    }
     const client = new client_sqs_1.SQSClient();
     seneca.add('role:transport,hook:listen,type:sqs', hook_listen_sqs);
     seneca.add('role:transport,hook:client,type:sqs', hook_client_sqs);

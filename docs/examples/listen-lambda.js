@@ -10,9 +10,8 @@ run()
 async function run() {
   const seneca = Seneca({ legacy: false })
     .quiet()
-    .use('promisify')
-    .use('gateway')
-    .use('gateway-lambda')
+    .use('@seneca/gateway')
+    .use('@seneca/gateway-lambda')
     .use(SqsTransport)
     .message('color:red', async function (msg) {
       return { hex: '#ff0000', shade: msg.shade }

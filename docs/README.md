@@ -27,7 +27,7 @@ The documentation follows the [Diátaxis](https://diataxis.fr) layout.
 
 | Page | Topic |
 | ---- | ----- |
-| [How the transport works](explanation/how-it-works.md) | Client and listen sides, Seneca 3 and 4, limits. |
+| [How the transport works](explanation/how-it-works.md) | Client and listen sides, Seneca 4, limits. |
 
 ## Feature index
 

@@ -15,14 +15,19 @@
 
 An AWS SQS transport for [Seneca](http://senecajs.org): `client` sends
 messages to SQS queues, and `listen` handles SQS records delivered to an
-AWS Lambda function (through `@seneca/gateway-lambda`). Works with Seneca 3
-and the Seneca 4 prerelease (`seneca@4.0.0-rc5`), on Node 22 and 24.
+AWS Lambda function (through `@seneca/gateway-lambda`). Needs Seneca 4 and
+Node.js 24 or later.
 
 ## Install
 
 ```sh
-npm install @seneca/sqs-transport @aws-sdk/client-sqs \
-  seneca-promisify @seneca/gateway @seneca/gateway-lambda
+npm install seneca@^4 @seneca/sqs-transport
+```
+
+The listen side also needs the gateway plugins:
+
+```sh
+npm install @seneca/gateway @seneca/gateway-lambda
 ```
 
 ## Quick Example
@@ -31,9 +36,6 @@ npm install @seneca/sqs-transport @aws-sdk/client-sqs \
 const Seneca = require('seneca')
 
 const seneca = Seneca({ legacy: false })
-  .use('promisify')
-  .use('gateway')
-  .use('gateway-lambda')
   .use('@seneca/sqs-transport', { prefix: 'demo-' })
   .client({ type: 'sqs', pin: 'color:red' })
 
@@ -84,8 +86,8 @@ Full index: [docs/README.md](docs/README.md).
 ## Contributing
 
 The [Senecajs org](https://github.com/senecajs/) encourages open
-participation. To run the tests (Node 24 or 22, Seneca 4 prerelease as
-devDependency), start ElasticMQ with Docker first:
+participation. To run the tests (Node 24 or later), start ElasticMQ with
+Docker first:
 
 ```sh
 npm install
@@ -103,9 +105,9 @@ workflow changes are kept as patches in `.patches/` (apply with
 Part of the [Senecajs org](https://github.com/senecajs/). History of
 changes: [CHANGES.md](CHANGES.md).
 
-| Seneca | Node | Status |
-| ------ | ---- | ------ |
-| 3.x | 18+ | allowed by the peer range, not tested in CI |
-| 4.0.0-rc5, 4.0.0 | 22, 24 | tested |
+| Plugin | Seneca | Node |
+| ------ | ------ | ---- |
+| 0.7.x | 4.x | 24+ |
+| 0.6.x | 3.x | 14+ |
 
 License: [MIT](LICENSE).
